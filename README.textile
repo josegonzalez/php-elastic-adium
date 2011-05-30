@@ -31,6 +31,12 @@ In your sites directory type
 
 h2. Usage
 
+To import, run @php import.php@ in a terminal. Go get dinner, this might take a while.
+
+When it's done, you can browser to something like @http://localhost/elastic_adium/@ and view/search your logs.
+
+h2. Errata
+
 You'll likely need to run the import script. This may take a long time depending upon how many log files need to be parsed, and how many messages are to be inserted. If any of the chatlogs are broken, the import script will skip them, but also output a message detailing the location of the broken chatlog should you like to fix it.
 
 @import.php@ does not overwrite existing messages, so take care when re-importing data. You will end up with duplicate data.
