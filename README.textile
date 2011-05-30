@@ -1,0 +1,80 @@
+h1. ElasticAdium
+
+Export your adium logs to something slightly more useful for search
+
+h2. Background
+
+I have around 4 years worth of adium Logs across various accounts. Searching for data is quite annoying, and in fact almost impossible, since Adium stores things as XML and regularly needs to re-index them. Why they didn't just use an SQL solution, I do not know.
+
+But since we have stuff like MySQL and ElasticSearch, I figured I'd use them. Thanks to "Karel Minařík":http://karmi.cz/ for his post on "Searching Your Gmail Messages with ElasticSearch and Ruby":http://ephemera.karmi.cz/post/5510326335/gmail-elasticsearch-ruby, as well as the current ui for ElasticAdium.
+
+h2. Requirements
+
+* PHP 5.2.6
+* ElasticSearch or some SQL database
+* mod_rewrite or similar for current ui
+* Lots of patience
+
+h2. Installation
+
+_[Manual]_
+
+# Download this: http://github.com/josegonzalez/elastic_adium/zipball/master
+# Unzip that download.
+# Copy the resulting folder to your sites directory
+# Rename the folder you just copied to @elastic_adium@
+
+_[GIT Clone]_
+
+In your sites directory type
+<pre><code>git clone git://github.com/josegonzalez/elastic_adium.git</code></pre>
+
+h2. Usage
+
+You'll likely need to run the import script. This may take a long time depending upon how many log files need to be parsed, and how many messages are to be inserted. If any of the chatlogs are broken, the import script will skip them, but also output a message detailing the location of the broken chatlog should you like to fix it.
+
+@import.php@ does not overwrite existing messages, so take care when re-importing data. You will end up with duplicate data.
+
+The import script supports PDO as well as ElasticSearch, but the interface only supports ElasticSearch.
+
+The configuration is kept in @app/config/bootstrap.php@.
+
+If using PDO, you'll want to setup a proper schema. I have one for mysql available in @config/schema.sql@. Please note that there are two tables, @logs@ and @messages@.
+
+h2. Todo
+
+* -Genericize configuration out of @web/index.php@ and @import.php@-
+* Add a list of participants to each log and each message
+* Hash all messages so that imports do not duplicate messages
+* Some spiffy ASCII art
+* Better readme
+* Docblocks and error logging
+* Fix sorting
+* Better search interface
+* Surface result relevancy
+* Add paging and search summary
+* Translating searches from @elastic_search@ to sql conditions
+* Allow automatic recovery of broken log files
+* Unit Tests?
+
+h2. License
+
+Copyright (c) 2011 Jose Diaz-Gonzalez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
